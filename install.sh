@@ -1,7 +1,14 @@
 #!/bin/bash
 # NotifyGuard / Unique Notify - Installation Script
 # CloudLinux CPU Monitoring with Telegram Alerts for cPanel/WHM
-# Usage: bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+# 
+# Usage Method 1 (One-line install):
+#   bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
+#   Or try: main instead of master if you get a 404 error
+#
+# Usage Method 2 (Manual install):
+#   git clone https://github.com/noyonmiahdev/Unique-Notify.git
+#   cd Unique-Notify && bash install.sh
 
 set -e
 
@@ -13,7 +20,8 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main"
+# Try master branch first, fall back to main if needed
+REPO_URL="https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master"
 DAEMON_FILE="/usr/local/bin/uniquenotifyd.py"
 CONFIG_DIR="/var/cpanel/uniquenotify"
 CONFIG_FILE="$CONFIG_DIR/config.json"

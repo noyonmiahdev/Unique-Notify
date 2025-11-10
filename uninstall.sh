@@ -1,7 +1,14 @@
 #!/bin/bash
 # NotifyGuard / Unique Notify - Uninstallation Script
 # CloudLinux CPU Monitoring with Telegram Alerts for cPanel/WHM
-# Usage: bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+# 
+# Usage Method 1 (One-line uninstall):
+#   bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/uninstall.sh)
+#   Or try: main instead of master if you get a 404 error
+#
+# Usage Method 2 (Manual uninstall):
+#   git clone https://github.com/noyonmiahdev/Unique-Notify.git
+#   cd Unique-Notify && bash uninstall.sh
 
 set -e
 

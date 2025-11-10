@@ -18,15 +18,34 @@ NotifyGuard is a lightweight cPanel/WHM plugin that monitors CloudLinux LVE CPU 
 
 ## Quick Installation
 
-### One-Line Install
+### Method 1: One-Line Install (Recommended)
 
 Run the following command as root:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
 ```
 
-This will:
+**Note:** If you receive a "404: Not Found" error, the repository may use `main` instead of `master`. Try:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+```
+
+### Method 2: Manual Installation (Alternative)
+
+If the one-line install doesn't work, use the manual method:
+
+```bash
+# Clone the repository
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+
+# Run the installer
+bash install.sh
+```
+
+**What the installer does:**
 - Create necessary directories
 - Install Python dependencies
 - Deploy daemon and WHM UI
@@ -217,12 +236,29 @@ cat /etc/redhat-release
 
 ## Uninstallation
 
-### One-Line Uninstall
+### Method 1: One-Line Uninstall
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/uninstall.sh)
 ```
 
-The uninstaller will:
+**Note:** If you receive a "404: Not Found" error, try using `main` instead of `master`:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+```
+
+### Method 2: Manual Uninstall (Alternative)
+
+```bash
+# Clone the repository (if not already cloned)
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+
+# Run the uninstaller
+bash uninstall.sh
+```
+
+**What the uninstaller does:**
 - Offer to backup your configuration
 - Stop and remove the service
 - Delete all plugin files
@@ -253,8 +289,14 @@ systemctl daemon-reload
 To upgrade to the latest version:
 
 ```bash
-# Run installer again (it will preserve config)
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+# Method 1: Run installer again (it will preserve config)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
+# Or try: main instead of master if you get a 404 error
+
+# Method 2: Manual upgrade
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+bash install.sh
 
 # Restart service
 systemctl restart uniquenotify.service

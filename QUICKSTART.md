@@ -4,8 +4,21 @@ Get NotifyGuard up and running in 5 minutes!
 
 ## 🚀 Installation (1 minute)
 
+**Method 1: One-line install**
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
+```
+
+**If you get a "404: Not Found" error, try:**
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+```
+
+**Method 2: Manual install (alternative)**
+```bash
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+bash install.sh
 ```
 
 Wait for installation to complete. You should see:
@@ -116,8 +129,9 @@ python3 /usr/local/bin/uniquenotifyd.py
 python3 --version
 
 # Reinstall
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
+# Or use: main instead of master if you get a 404 error
 ```
 
 ## 📚 Need More Help?
