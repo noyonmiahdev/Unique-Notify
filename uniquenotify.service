@@ -1,0 +1,15 @@
+[Unit]
+Description=NotifyGuard - CloudLinux CPU Monitoring Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/python3 /usr/local/bin/uniquenotifyd.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

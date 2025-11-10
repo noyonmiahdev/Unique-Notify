@@ -1,0 +1,13 @@
+{
+  "threshold_cpu": 90,
+  "cooldown_minutes": 30,
+  "quiet_hours": "00:00-06:59",
+  "telegram": {
+    "enabled": true,
+    "bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
+    "chat_id": "YOUR_CHAT_ID"
+  },
+  "use_cloudlinux": true,
+  "interval_seconds": 120,
+  "max_alerts_per_hour": 10
+}
