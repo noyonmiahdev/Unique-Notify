@@ -32,10 +32,37 @@
 
 ## 🚀 Installation
 
-### 🧠 One-line Install (from GitHub)
+### 🧠 Method 1: One-line Install (Recommended)
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
 ```
+
+**Note:** If the above command returns a 404 error, try using `main` instead of `master`:
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+```
+
+### 🧠 Method 2: Manual Install (Alternative)
+```bash
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+bash install.sh
+```
+
+### 🔍 Installation Troubleshooting
+
+**If you see error: `/dev/fd/63: line 1: 404:: command not found`**
+
+This means the GitHub raw URL returned "404: Not Found". To fix:
+
+1. **Try the alternative branch**: Use `main` instead of `master` (or vice versa)
+2. **Use manual installation**: Clone the repo and run `bash install.sh`
+3. **Check GitHub**: Ensure the repository exists and files are accessible
+
+**Why this happens:**
+- The repository may use `master` or `main` as default branch
+- Files may not be pushed to the branch yet
+- The `curl -s` flag hides errors; using `curl -fsSL` is better (fails on error, shows location redirects)
 
 ---
 
@@ -94,10 +121,23 @@ Time: 2025-11-10 15:42:23
 
 ## 🔄 Uninstallation
 
-### 🧹 One-line Uninstall
+### 🧹 Method 1: One-line Uninstall
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/uninstall.sh)
+```
+
+**Note:** If the above command returns a 404 error, try using `main` instead of `master`:
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+```
+
+### 🧹 Method 2: Manual Uninstall (Alternative)
+
+```bash
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+bash uninstall.sh
 ```
 
 ---
@@ -186,7 +226,8 @@ The `install.sh` script automatically:
 Usage:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
+# Or if master doesn't work, try: main instead of master
 ```
 
 ---
@@ -202,7 +243,8 @@ The `uninstall.sh` script automatically:
 Usage:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/uninstall.sh)
+# Or if master doesn't work, try: main instead of master
 ```
 
 ---
