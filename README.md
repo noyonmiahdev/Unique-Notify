@@ -3,6 +3,8 @@
 **Unique Notify** হলো cPanel/WHM-এর জন্য তৈরি একটি lightweight CloudLinux CPU মনিটরিং প্লাগিন।  
 এটি প্রতিটি cPanel ইউজারের CPU ব্যবহার নিরীক্ষণ করে এবং অ্যাডমিনকে টেলিগ্রামে স্বয়ংক্রিয়ভাবে অ্যালার্ট পাঠায়।
 
+**📚 বাংলা গাইড / Bengali Guide:** [QUICKSTART_BN.md](QUICKSTART_BN.md) - সম্পূর্ণ বাংলায় ইনস্টলেশন ও ব্যবহার গাইড
+
 ---
 
 ## 📖 Features
@@ -80,7 +82,23 @@ Fill the fields:
 | **Cooldown**      | e.g. 30 minutes                                       |
 | **Quiet Hours**   | e.g. `00:00-06:59`                                    |
 
-💾 Click **Save** to apply the settings.
+💾 Click **Save Configuration** to apply the settings.
+
+### 🧪 Testing Your Configuration (টেস্ট করার পদ্ধতি)
+
+After entering your Telegram credentials, you can test the connection:
+
+1. **📤 Test Telegram Button**: Click this button to send a test message to your Telegram chat
+2. If successful, you'll receive a message: "✅ Unique Notify Test Message"
+3. This verifies your Bot Token and Chat ID are working correctly
+
+**বাংলায় (In Bengali):**
+1. আপনার Telegram Bot Token এবং Chat ID লিখুন
+2. **📤 Test Telegram** বাটনে ক্লিক করুন
+3. আপনার Telegram চ্যাটে টেস্ট মেসেজ পাবেন
+4. সফল হলে "✅ Unique Notify Test Message" দেখাবে
+
+**Note:** You can test without saving first to verify your credentials before saving the configuration.
 
 ---
 
@@ -116,6 +134,39 @@ Time: 2025-11-10 15:42:23
 | **index.php**        | WHM plugin form to configure Telegram credentials and thresholds.                                                     |
 | **config.json**      | Stores configuration and preferences.                                                                                 |
 | **systemd service**  | Runs continuously and restarts automatically if stopped.                                                              |
+
+---
+
+## 🔄 Update (আপডেট)
+
+### 🔁 Method 1: One-line Update (Recommended)
+
+To update Unique Notify to the latest version, run this single command:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/update.sh)
+```
+
+**Note:** If the above command returns a 404 error, try using `master` instead of `main`:
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/update.sh)
+```
+
+### 🔁 Method 2: Manual Update (Alternative)
+
+```bash
+git clone https://github.com/noyonmiahdev/Unique-Notify.git
+cd Unique-Notify
+bash update.sh
+```
+
+**What the update script does:**
+- ✅ Backs up your current configuration
+- ✅ Downloads the latest version of the daemon and WHM UI
+- ✅ Restarts the service with your existing configuration
+- ✅ Preserves all your settings (Bot Token, Chat ID, thresholds, etc.)
+
+**Note:** Your configuration is never lost during updates. A backup is always created at `/var/cpanel/uniquenotify/config.json.backup`
 
 ---
 

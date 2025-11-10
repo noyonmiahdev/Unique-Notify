@@ -1,5 +1,5 @@
 #!/bin/bash
-# NotifyGuard / Unique Notify - Uninstallation Script
+# Unique Notify - Uninstallation Script
 # CloudLinux CPU Monitoring with Telegram Alerts for cPanel/WHM
 # 
 # Usage Method 1 (One-line uninstall):
@@ -27,7 +27,7 @@ APPCONFIG_FILE="/var/cpanel/apps/uniquenotify.conf"
 SERVICE_FILE="/etc/systemd/system/uniquenotify.service"
 
 echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║  NotifyGuard / Unique Notify - Uninstaller     ║${NC}"
+echo -e "${BLUE}║       Unique Notify - Uninstaller              ║${NC}"
 echo -e "${BLUE}║   CloudLinux CPU Alert System for cPanel/WHM   ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════════════╝${NC}"
 echo ""
@@ -42,7 +42,7 @@ echo -e "${GREEN}✓ Running as root${NC}"
 
 # Confirm uninstallation
 echo ""
-echo -e "${YELLOW}⚠ WARNING: This will remove NotifyGuard and all its files.${NC}"
+echo -e "${YELLOW}⚠ WARNING: This will remove Unique Notify and all its files.${NC}"
 read -p "Are you sure you want to uninstall? (y/n): " -n 1 -r
 echo ""
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -135,7 +135,7 @@ echo -e "${GREEN}╔════════════════════
 echo -e "${GREEN}║      Uninstallation Completed Successfully!    ║${NC}"
 echo -e "${GREEN}╚════════════════════════════════════════════════╝${NC}"
 echo ""
-echo -e "${BLUE}NotifyGuard has been completely removed from your system.${NC}"
+echo -e "${BLUE}Unique Notify has been completely removed from your system.${NC}"
 echo ""
 
 if [ -n "${BACKUP_FILE}" ] && [ -f "${BACKUP_FILE}" ]; then
@@ -147,5 +147,5 @@ fi
 echo -e "${BLUE}To reinstall in the future, run:${NC}"
 echo -e "  ${YELLOW}bash <(curl -s https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/install.sh)${NC}"
 echo ""
-echo -e "${GREEN}Thank you for using NotifyGuard!${NC}"
+echo -e "${GREEN}Thank you for using Unique Notify!${NC}"
 echo ""

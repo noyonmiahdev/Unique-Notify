@@ -1,5 +1,5 @@
 [Unit]
-Description=NotifyGuard - CloudLinux CPU Monitoring Daemon
+Description=Unique Notify - CloudLinux CPU Monitoring Daemon
 After=network.target
 
 [Service]

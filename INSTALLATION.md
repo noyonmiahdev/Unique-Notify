@@ -1,8 +1,8 @@
-# NotifyGuard / Unique Notify - Installation Guide
+# Unique Notify - Installation Guide
 
 ## Overview
 
-NotifyGuard is a lightweight cPanel/WHM plugin that monitors CloudLinux LVE CPU usage and sends real-time Telegram alerts when users exceed configured thresholds.
+Unique Notify is a lightweight cPanel/WHM plugin that monitors CloudLinux LVE CPU usage and sends real-time Telegram alerts when users exceed configured thresholds.
 
 ## System Requirements
 
@@ -154,7 +154,7 @@ Use the "Test Telegram" button in the WHM interface, or manually test:
 ```bash
 curl -X POST https://api.telegram.org/bot<TOKEN>/sendMessage \
   -H "Content-Type: application/json" \
-  -d '{"chat_id":"<CHAT_ID>","text":"Test from NotifyGuard"}'
+  -d '{"chat_id":"<CHAT_ID>","text":"Test from Unique Notify"}'
 ```
 
 ## Troubleshooting
@@ -284,23 +284,37 @@ rm -f /var/cpanel/apps/uniquenotify.conf
 systemctl daemon-reload
 ```
 
-## Upgrading
+## Upgrading / Updating
 
-To upgrade to the latest version:
+To upgrade to the latest version, use the new update script:
+
+### Method 1: One-Line Update (Recommended)
 
 ```bash
-# Method 1: Run installer again (it will preserve config)
-bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/install.sh)
-# Or try: main instead of master if you get a 404 error
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/update.sh)
+```
 
-# Method 2: Manual upgrade
+**Note:** If the above command returns a 404 error, try using `master` instead of `main`:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/master/update.sh)
+```
+
+### Method 2: Manual Update (Alternative)
+
+```bash
 git clone https://github.com/noyonmiahdev/Unique-Notify.git
 cd Unique-Notify
-bash install.sh
-
-# Restart service
-systemctl restart uniquenotify.service
+bash update.sh
 ```
+
+**What the update script does:**
+- ✅ Backs up your current configuration
+- ✅ Downloads the latest version of the daemon and WHM UI
+- ✅ Restarts the service with your existing configuration
+- ✅ Preserves all your settings (Bot Token, Chat ID, thresholds, etc.)
+
+**Note:** Your configuration is never lost during updates. A backup is always created at `/var/cpanel/uniquenotify/config.json.backup`
 
 ## Support
 

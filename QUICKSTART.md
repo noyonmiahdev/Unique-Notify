@@ -1,6 +1,6 @@
-# NotifyGuard - Quick Start Guide
+# Unique Notify - Quick Start Guide
 
-Get NotifyGuard up and running in 5 minutes!
+Get Unique Notify up and running in 5 minutes!
 
 ## 🚀 Installation (1 minute)
 
@@ -61,7 +61,7 @@ Wait for installation to complete. You should see:
 
 ## ✅ Done!
 
-You're all set! NotifyGuard is now monitoring your server.
+You're all set! Unique Notify is now monitoring your server.
 
 ## 📊 What Happens Next?
 
@@ -142,4 +142,4 @@ bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/m
 
 ---
 
-**Enjoy NotifyGuard! 🎉**
+**Enjoy Unique Notify! 🎉**

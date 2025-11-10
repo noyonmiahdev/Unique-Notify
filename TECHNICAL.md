@@ -1,8 +1,8 @@
-# NotifyGuard - Technical Reference
+# Unique Notify - Technical Reference
 
 ## Architecture Overview
 
-NotifyGuard follows a modular architecture with clear separation of concerns:
+Unique Notify follows a modular architecture with clear separation of concerns:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -48,7 +48,7 @@ NotifyGuard follows a modular architecture with clear separation of concerns:
 
 ### 1. Python Daemon (uniquenotifyd.py)
 
-#### Class: NotifyGuard
+#### Class: UniqueNotify
 
 **Initialization:**
 ```python
@@ -358,7 +358,7 @@ python3 /usr/local/bin/uniquenotifyd.py
 ### Common Log Messages
 
 ```
-INFO - NotifyGuard daemon starting...
+INFO - Unique Notify daemon starting...
 INFO - Hostname: server01.example.com
 INFO - CPU Threshold: 90%
 INFO - High CPU detected: johndoe = 96.4%
@@ -469,7 +469,7 @@ python3 test_daemon.py
    ```bash
    curl -X POST https://api.telegram.org/bot{TOKEN}/sendMessage \
      -d "chat_id={CHAT_ID}" \
-     -d "text=Test from NotifyGuard"
+     -d "text=Test from Unique Notify"
    ```
 
 3. **Test Service:**

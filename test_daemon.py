@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script for NotifyGuard daemon
+Test script for Unique Notify daemon
 Validates core functionality without requiring CloudLinux or Telegram
 """
 
@@ -184,7 +184,7 @@ Time: {current_time}"""
 def main():
     """Run all tests"""
     print("=" * 60)
-    print("NotifyGuard Daemon - Unit Tests")
+    print("Unique Notify Daemon - Unit Tests")
     print("=" * 60)
     
     try:

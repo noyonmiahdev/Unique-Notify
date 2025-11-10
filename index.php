@@ -1,6 +1,6 @@
 <?php
 /**
- * NotifyGuard/Unique Notify - WHM Admin Panel UI
+ * Unique Notify - WHM Admin Panel UI
  * Configuration interface for CloudLinux CPU monitoring and Telegram alerts
  */
 
@@ -136,7 +136,7 @@ function testTelegramConnection($post) {
     $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
     $data = [
         'chat_id' => $chatId,
-        'text' => "✅ NotifyGuard Test Message\n\nYour Telegram configuration is working correctly!\nTime: " . date('Y-m-d H:i:s')
+        'text' => "✅ Unique Notify Test Message\n\nYour Telegram configuration is working correctly!\nTime: " . date('Y-m-d H:i:s')
     ];
     
     $options = [
@@ -173,7 +173,7 @@ function testTelegramConnection($post) {
 }
 
 /**
- * Restart the NotifyGuard service
+ * Restart the Unique Notify service
  */
 function restartService() {
     $output = [];
@@ -184,7 +184,7 @@ function restartService() {
     if ($returnCode === 0) {
         return [
             'success' => true,
-            'message' => '✅ NotifyGuard service restarted successfully!'
+            'message' => '✅ Unique Notify service restarted successfully!'
         ];
     } else {
         return [
@@ -216,7 +216,7 @@ $serviceStatus = getServiceStatus();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotifyGuard - CloudLinux CPU Alerts</title>
+    <title>Unique Notify - CloudLinux CPU Alerts</title>
     <style>
         * {
             margin: 0;
@@ -470,7 +470,7 @@ $serviceStatus = getServiceStatus();
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧩 NotifyGuard</h1>
+            <h1>🧩 Unique Notify</h1>
             <p>CloudLinux CPU Monitoring & Telegram Alerts</p>
         </div>
         

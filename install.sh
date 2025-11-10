@@ -1,5 +1,5 @@
 #!/bin/bash
-# NotifyGuard / Unique Notify - Installation Script
+# Unique Notify - Installation Script
 # CloudLinux CPU Monitoring with Telegram Alerts for cPanel/WHM
 # 
 # Usage Method 1 (One-line install):
@@ -31,7 +31,7 @@ APPCONFIG_FILE="/var/cpanel/apps/uniquenotify.conf"
 SERVICE_FILE="/etc/systemd/system/uniquenotify.service"
 
 echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║   NotifyGuard / Unique Notify - Installer      ║${NC}"
+echo -e "${BLUE}║      Unique Notify - Installer                 ║${NC}"
 echo -e "${BLUE}║   CloudLinux CPU Alert System for cPanel/WHM   ║${NC}"
 echo -e "${BLUE}╚════════════════════════════════════════════════╝${NC}"
 echo ""
@@ -176,7 +176,7 @@ echo -e "${BLUE}[7/7] Setting up systemd service...${NC}"
 # Create systemd service file
 cat > "$SERVICE_FILE" << EOF
 [Unit]
-Description=NotifyGuard - CloudLinux CPU Monitoring Daemon
+Description=Unique Notify - CloudLinux CPU Monitoring Daemon
 After=network.target
 
 [Service]
@@ -226,5 +226,5 @@ echo -e "${BLUE}Support:${NC}"
 echo -e "  • GitHub: ${YELLOW}https://github.com/noyonmiahdev/Unique-Notify${NC}"
 echo -e "  • Documentation: Check README.md for detailed information"
 echo ""
-echo -e "${GREEN}Thank you for using NotifyGuard!${NC}"
+echo -e "${GREEN}Thank you for using Unique Notify!${NC}"
 echo ""

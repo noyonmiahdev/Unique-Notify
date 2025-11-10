@@ -1,6 +1,6 @@
-# Contributing to NotifyGuard / Unique Notify
+# Contributing to Unique Notify
 
-Thank you for your interest in contributing to NotifyGuard! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to Unique Notify! This document provides guidelines for contributing to the project.
 
 ## Development Setup
 
@@ -43,7 +43,7 @@ Unique-Notify/
 The daemon monitors CloudLinux CPU usage and sends Telegram alerts.
 
 **Key components:**
-- `NotifyGuard` class - Main daemon logic
+- `UniqueNotify` class - Main daemon logic
 - `load_config()` - Configuration management
 - `get_cloudlinux_cpu_usage()` - LVE data parsing
 - `send_telegram_alert()` - Telegram API integration
@@ -212,7 +212,7 @@ It's recommended to test in a development environment before submitting changes:
 
 1. Set up a test cPanel/WHM server
 2. Install CloudLinux (or use mock data for testing)
-3. Install NotifyGuard
+3. Install Unique Notify
 4. Make your changes
 5. Test thoroughly
 6. Document any issues found
@@ -390,7 +390,7 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ## Acknowledgments
 
-Thank you to all contributors who help make NotifyGuard better!
+Thank you to all contributors who help make Unique Notify better!
 
 ---
 

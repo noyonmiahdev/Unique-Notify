@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NotifyGuard/Unique Notify - CloudLinux CPU Monitoring Daemon
+Unique Notify - CloudLinux CPU Monitoring Daemon
 A lightweight daemon that monitors CloudLinux LVE CPU usage and sends Telegram alerts
 when users exceed configured thresholds.
 """
@@ -40,7 +40,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class NotifyGuard:
+class UniqueNotify:
     """Main daemon class for CPU monitoring and alerting"""
     
     def __init__(self):
@@ -284,7 +284,7 @@ Time: {current_time}"""
     
     def run(self):
         """Main daemon loop"""
-        logger.info("NotifyGuard daemon starting...")
+        logger.info("Unique Notify daemon starting...")
         logger.info(f"Hostname: {self.hostname}")
         logger.info(f"CPU Threshold: {self.config.get('threshold_cpu')}%")
         logger.info(f"Check Interval: {self.config.get('interval_seconds')}s")
@@ -306,7 +306,7 @@ Time: {current_time}"""
 
 def main():
     """Entry point"""
-    daemon = NotifyGuard()
+    daemon = UniqueNotify()
     daemon.run()
 
 
