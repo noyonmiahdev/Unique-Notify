@@ -161,7 +161,7 @@ version: "1.0.0"
 description: "CloudLinux CPU Monitoring with Telegram Alerts"
 url: "/cgi/uniquenotify/index.php"
 icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
-group: "plugins"
+group: "Plugins"
 feature_showcase: 0
 EOF
 
