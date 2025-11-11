@@ -124,12 +124,19 @@ chmod 755 "$WHM_CGI_DIR/index.php"
 # Update AppConfig
 if [ -f "uniquenotify.conf" ]; then
     cp uniquenotify.conf "$APPCONFIG_FILE"
+    echo -e "${GREEN}✓ AppConfig updated${NC}"
 elif curl -fsSL "$REPO_URL/uniquenotify.conf" -o "$APPCONFIG_FILE" 2>/dev/null; then
     echo -e "${GREEN}✓ AppConfig updated${NC}"
+else
+    echo -e "${YELLOW}⚠ Unable to update AppConfig from repository${NC}"
 fi
 
 # Re-register with cPanel
-/usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1 || true
+if /usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ WHM plugin registration refreshed${NC}"
+else
+    echo -e "${YELLOW}⚠ Unable to refresh WHM plugin registration. Review $APPCONFIG_FILE for syntax issues.${NC}"
+fi
 
 # Restore configuration
 if [ -f "$CONFIG_BACKUP" ]; then

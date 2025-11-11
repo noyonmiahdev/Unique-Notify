@@ -156,19 +156,28 @@ echo -e "${BLUE}[6/7] Registering WHM plugin...${NC}"
 # Create WHM AppConfig
 cat > "$APPCONFIG_FILE" << 'EOF'
 ---
+appname: uniquenotify
 name: "Unique Notify"
+service: whostmgr
+category: Plugins
+group: Plugins
 version: "1.0.0"
 description: "CloudLinux CPU Monitoring with Telegram Alerts"
 url: "/cgi/uniquenotify/index.php"
 icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
-group: "Plugins"
-feature_showcase: 0
+authed: 1
+featurelist: default
+state: enabled
 EOF
 
 # Register with cPanel
-/usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1 || true
 
-echo -e "${GREEN}✓ WHM plugin registered${NC}"
+if /usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1; then
+    echo -e "${GREEN}✓ WHM plugin registered${NC}"
+else
+    echo -e "${RED}✗ Failed to register WHM plugin. Please check $APPCONFIG_FILE for syntax errors.${NC}"
+    exit 1
+fi
 
 echo ""
 echo -e "${BLUE}[7/7] Setting up systemd service...${NC}"
