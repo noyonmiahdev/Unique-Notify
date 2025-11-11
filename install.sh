@@ -30,6 +30,67 @@ WHM_CGI_DIR="/usr/local/cpanel/whostmgr/docroot/cgi/uniquenotify"
 APPCONFIG_FILE="/var/cpanel/apps/uniquenotify.conf"
 SERVICE_FILE="/etc/systemd/system/uniquenotify.service"
 
+write_primary_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+displayname: "Unique Notify"
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+authed: 1
+state: enabled
+EOF
+}
+
+write_legacy_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+feature_showcase: 0
+authed: 1
+state: enabled
+EOF
+}
+
+register_appconfig_with_fallback() {
+    local config_path="$1"
+    local output
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "$config_path" 2>&1); then
+        echo -e "${GREEN}✓ WHM plugin registered${NC}"
+        return 0
+    fi
+
+    echo -e "${YELLOW}⚠ Unable to register WHM plugin with the default schema.${NC}"
+    echo -e "${YELLOW}⚠ cPanel response:${NC}\n$output"
+    echo -e "${YELLOW}⚠ Retrying with legacy AppConfig layout for older WHM releases...${NC}"
+
+    write_legacy_appconfig "$config_path"
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "$config_path" 2>&1); then
+        echo -e "${GREEN}✓ WHM plugin registered using legacy schema${NC}"
+        return 0
+    fi
+
+    echo -e "${RED}✗ Failed to register WHM plugin even after applying the legacy schema.${NC}"
+    echo -e "${RED}$output${NC}"
+    return 1
+}
+
 echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║      Unique Notify - Installer                 ║${NC}"
 echo -e "${BLUE}║   CloudLinux CPU Alert System for cPanel/WHM   ║${NC}"
@@ -154,30 +215,12 @@ echo ""
 echo -e "${BLUE}[6/7] Registering WHM plugin...${NC}"
 
 # Create WHM AppConfig
-cat > "$APPCONFIG_FILE" << 'EOF'
----
-appname: uniquenotify
-service: whostmgr
-name: "Unique Notify"
-displayname: "Unique Notify"
-description: "CloudLinux CPU Monitoring with Telegram Alerts"
-url: "/cgi/uniquenotify/index.php"
-icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
-version: "1.0.0"
-group: Plugins
-category: Plugins
-featurelist:
-  - default
-authed: 1
-state: enabled
-EOF
+write_primary_appconfig "$APPCONFIG_FILE"
 
-# Register with cPanel
-
-if /usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1; then
-    echo -e "${GREEN}✓ WHM plugin registered${NC}"
+# Register with cPanel (fallback to legacy layout if needed)
+if register_appconfig_with_fallback "$APPCONFIG_FILE"; then
+    :
 else
-    echo -e "${RED}✗ Failed to register WHM plugin. Please check $APPCONFIG_FILE for syntax errors.${NC}"
     exit 1
 fi
 

@@ -29,6 +29,67 @@ CONFIG_BACKUP="$CONFIG_DIR/config.json.backup"
 WHM_CGI_DIR="/usr/local/cpanel/whostmgr/docroot/cgi/uniquenotify"
 APPCONFIG_FILE="/var/cpanel/apps/uniquenotify.conf"
 
+write_primary_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+displayname: "Unique Notify"
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+authed: 1
+state: enabled
+EOF
+}
+
+write_legacy_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+feature_showcase: 0
+authed: 1
+state: enabled
+EOF
+}
+
+register_appconfig_with_fallback() {
+    local config_path="$1"
+    local output
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "$config_path" 2>&1); then
+        echo -e "${GREEN}✓ WHM plugin registration refreshed${NC}"
+        return 0
+    fi
+
+    echo -e "${YELLOW}⚠ Unable to refresh WHM plugin registration with the default schema.${NC}"
+    echo -e "${YELLOW}⚠ cPanel response:${NC}\n$output"
+    echo -e "${YELLOW}⚠ Retrying with legacy AppConfig layout for older WHM releases...${NC}"
+
+    write_legacy_appconfig "$config_path"
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "$config_path" 2>&1); then
+        echo -e "${GREEN}✓ WHM plugin registration refreshed using legacy schema${NC}"
+        return 0
+    fi
+
+    echo -e "${YELLOW}⚠ Unable to refresh WHM plugin registration even with the legacy schema.${NC}"
+    echo -e "${YELLOW}⚠ cPanel response:${NC}\n$output"
+    return 1
+}
+
 echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║        Unique Notify - Updater                 ║${NC}"
 echo -e "${BLUE}║   CloudLinux CPU Alert System for cPanel/WHM   ║${NC}"
@@ -128,15 +189,13 @@ if [ -f "uniquenotify.conf" ]; then
 elif curl -fsSL "$REPO_URL/uniquenotify.conf" -o "$APPCONFIG_FILE" 2>/dev/null; then
     echo -e "${GREEN}✓ AppConfig updated${NC}"
 else
-    echo -e "${YELLOW}⚠ Unable to update AppConfig from repository${NC}"
+    echo -e "${YELLOW}⚠ Unable to update AppConfig from repository; regenerating locally.${NC}"
+    write_primary_appconfig "$APPCONFIG_FILE"
 fi
 
-# Re-register with cPanel
-if output=$(/usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" 2>&1); then
-    echo -e "${GREEN}✓ WHM plugin registration refreshed${NC}"
-else
-    echo -e "${YELLOW}⚠ Unable to refresh WHM plugin registration. Review $APPCONFIG_FILE for syntax issues.${NC}"
-    echo -e "${YELLOW}⚠ cPanel response:${NC}\n$output"
+# Re-register with cPanel (fallback to legacy layout if needed)
+if ! register_appconfig_with_fallback "$APPCONFIG_FILE"; then
+    echo -e "${YELLOW}⚠ The WHM plugin registration still failed. Review $APPCONFIG_FILE and retry manually if necessary.${NC}"
 fi
 
 # Restore configuration
