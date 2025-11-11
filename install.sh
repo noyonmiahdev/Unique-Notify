@@ -30,6 +30,82 @@ WHM_CGI_DIR="/usr/local/cpanel/whostmgr/docroot/cgi/uniquenotify"
 APPCONFIG_FILE="/var/cpanel/apps/uniquenotify.conf"
 SERVICE_FILE="/etc/systemd/system/uniquenotify.service"
 
+write_primary_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+displayname: "Unique Notify"
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+featurelist:
+  - default
+authed: 1
+state: enabled
+EOF
+}
+
+write_legacy_appconfig() {
+    cat > "$1" <<'EOF'
+---
+appname: uniquenotify
+service: whostmgr
+name: uniquenotify
+description: "CloudLinux CPU Monitoring with Telegram Alerts"
+url: "/cgi/uniquenotify/index.php"
+icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
+version: "1.0.0"
+group: Plugins
+category: Plugins
+feature_showcase: 0
+authed: 1
+state: enabled
+EOF
+}
+
+register_appconfig_with_fallback() {
+    local config_path="$1"
+    local success_message="$2"
+    local legacy_success_message="$3"
+    local failure_intro="$4"
+    local failure_final="$5"
+    local output
+    local legacy_temp
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "$config_path" 2>&1); then
+        echo -e "${GREEN}✓ ${success_message}${NC}"
+        return 0
+    fi
+
+    echo -e "${YELLOW}⚠ ${failure_intro}${NC}"
+    echo -e "${YELLOW}⚠ cPanel response:${NC}\n${output}"
+    echo -e "${YELLOW}⚠ Retrying with legacy AppConfig layout for older WHM releases...${NC}"
+
+    if ! legacy_temp=$(mktemp); then
+        echo -e "${RED}✗ Failed to create a temporary file for the legacy AppConfig layout.${NC}"
+        return 1
+    fi
+
+    write_legacy_appconfig "${legacy_temp}"
+
+    if output=$(/usr/local/cpanel/bin/register_appconfig "${legacy_temp}" 2>&1); then
+        cp "${legacy_temp}" "${config_path}"
+        rm -f "${legacy_temp}"
+        echo -e "${GREEN}✓ ${legacy_success_message}${NC}"
+        return 0
+    fi
+
+    echo -e "${RED}✗ ${failure_final}${NC}"
+    echo -e "${RED}cPanel response:${NC}\n${output}"
+    rm -f "${legacy_temp}"
+    return 1
+}
+
 echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║      Unique Notify - Installer                 ║${NC}"
 echo -e "${BLUE}║   CloudLinux CPU Alert System for cPanel/WHM   ║${NC}"
@@ -154,21 +230,19 @@ echo ""
 echo -e "${BLUE}[6/7] Registering WHM plugin...${NC}"
 
 # Create WHM AppConfig
-cat > "$APPCONFIG_FILE" << 'EOF'
----
-name: "Unique Notify"
-version: "1.0.0"
-description: "CloudLinux CPU Monitoring with Telegram Alerts"
-url: "/cgi/uniquenotify/index.php"
-icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
-group: "Plugins"
-feature_showcase: 0
-EOF
+write_primary_appconfig "$APPCONFIG_FILE"
 
-# Register with cPanel
-/usr/local/cpanel/bin/register_appconfig "$APPCONFIG_FILE" > /dev/null 2>&1 || true
-
-echo -e "${GREEN}✓ WHM plugin registered${NC}"
+# Register with cPanel (fallback to legacy layout if needed)
+if register_appconfig_with_fallback \
+    "$APPCONFIG_FILE" \
+    "WHM plugin registered" \
+    "WHM plugin registered using legacy schema" \
+    "Unable to register WHM plugin with the default schema ($APPCONFIG_FILE)." \
+    "Failed to register WHM plugin even after applying the legacy schema. Review $APPCONFIG_FILE for syntax issues."; then
+    :
+else
+    exit 1
+fi
 
 echo ""
 echo -e "${BLUE}[7/7] Setting up systemd service...${NC}"
@@ -195,13 +269,21 @@ EOF
 # Reload systemd, enable and start service
 systemctl daemon-reload
 systemctl enable uniquenotify.service > /dev/null 2>&1
-systemctl start uniquenotify.service
+
+start_failed=0
+if ! systemctl start uniquenotify.service; then
+    start_failed=1
+fi
 
 # Check if service started successfully
 if systemctl is-active --quiet uniquenotify.service; then
     echo -e "${GREEN}✓ Service started successfully${NC}"
 else
-    echo -e "${YELLOW}⚠ Service may not have started. Check with: systemctl status uniquenotify.service${NC}"
+    if [[ ${start_failed} -eq 1 ]]; then
+        echo -e "${YELLOW}⚠ Service failed to start automatically. Review the logs with: systemctl status uniquenotify.service${NC}"
+    else
+        echo -e "${YELLOW}⚠ Service may not have started. Check with: systemctl status uniquenotify.service${NC}"
+    fi
 fi
 
 echo ""
