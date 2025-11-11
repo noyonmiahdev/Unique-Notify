@@ -163,10 +163,14 @@ bash update.sh
 **What the update script does:**
 - ✅ Backs up your current configuration
 - ✅ Downloads the latest version of the daemon and WHM UI
+- ✅ Updates the WHM plugin registration (fixes plugin visibility issues)
 - ✅ Restarts the service with your existing configuration
 - ✅ Preserves all your settings (Bot Token, Chat ID, thresholds, etc.)
 
 **Note:** Your configuration is never lost during updates. A backup is always created at `/var/cpanel/uniquenotify/config.json.backup`
+
+**If the plugin is not visible in WHM → Plugins section:**
+Run the update script to fix the plugin registration. This will update the AppConfig file to use the correct cPanel/WHM standards.
 
 ---
 

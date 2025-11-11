@@ -217,6 +217,24 @@ cat /etc/redhat-release
 - **400 Bad Request**: Chat ID is incorrect or bot hasn't been started
 - **Network Error**: Check firewall and internet connectivity
 
+### Plugin Not Visible in WHM Plugins Section
+
+If you've installed the plugin but it doesn't appear in **WHM → Plugins**:
+
+1. **Run the update script** to fix the plugin registration:
+   ```bash
+   bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/update.sh)
+   ```
+
+2. **Or manually re-register the plugin**:
+   ```bash
+   /usr/local/cpanel/bin/register_appconfig /var/cpanel/apps/uniquenotify.conf
+   ```
+
+3. **Refresh your WHM interface** (clear browser cache or use Ctrl+F5)
+
+**Note:** This issue was fixed in the latest version. The AppConfig file now uses the correct cPanel/WHM plugin registration format.
+
 ## Security Notes
 
 1. **File Permissions**
