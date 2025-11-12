@@ -170,7 +170,13 @@ bash update.sh
 **Note:** Your configuration is never lost during updates. A backup is always created at `/var/cpanel/uniquenotify/config.json.backup`
 
 **If the plugin is not visible in WHM → Plugins section:**
-Run the update script to fix the plugin registration. This will update the AppConfig file to use the correct cPanel/WHM standards.
+Run the update script to fix the plugin registration. This will update the AppConfig file to use the simplified cPanel/WHM format that ensures compatibility across all cPanel/WHM versions.
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/noyonmiahdev/Unique-Notify/main/update.sh)
+```
+
+After updating, refresh your WHM browser cache (Ctrl+F5) and the plugin should appear under **WHM → Plugins → Unique Notify**.
 
 ---
 
