@@ -160,8 +160,6 @@ name: Unique Notify
 version: 1.0.0
 description: CloudLinux CPU Monitoring with Telegram Alerts
 url: /cgi/uniquenotify/
-feature: Unique Notify
-icon: https://img.icons8.com/color/48/000000/telegram-app--v1.png
 EOF
 
 # Register with cPanel
