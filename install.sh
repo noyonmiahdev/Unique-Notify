@@ -156,18 +156,12 @@ echo -e "${BLUE}[6/7] Registering WHM plugin...${NC}"
 # Create WHM AppConfig
 cat > "$APPCONFIG_FILE" << 'EOF'
 ---
-appname: uniquenotify
-name: "Unique Notify"
-service: whostmgr
-category: Plugins
-group: Plugins
-version: "1.0.0"
-description: "CloudLinux CPU Monitoring with Telegram Alerts"
-url: "/cgi/uniquenotify/index.php"
-icon: "https://img.icons8.com/color/48/000000/telegram-app--v1.png"
-authed: 1
-featurelist: default
-state: enabled
+name: Unique Notify
+version: 1.0.0
+description: CloudLinux CPU Monitoring with Telegram Alerts
+url: /cgi/uniquenotify/index.php
+icon: https://img.icons8.com/color/48/000000/telegram-app--v1.png
+target: _self
 EOF
 
 # Register with cPanel

@@ -231,9 +231,30 @@ If you've installed the plugin but it doesn't appear in **WHM → Plugins**:
    /usr/local/cpanel/bin/register_appconfig /var/cpanel/apps/uniquenotify.conf
    ```
 
-3. **Refresh your WHM interface** (clear browser cache or use Ctrl+F5)
+3. **Verify the AppConfig file exists and is correct**:
+   ```bash
+   cat /var/cpanel/apps/uniquenotify.conf
+   ```
+   
+   The file should contain:
+   ```yaml
+   ---
+   name: Unique Notify
+   version: 1.0.0
+   description: CloudLinux CPU Monitoring with Telegram Alerts
+   url: /cgi/uniquenotify/index.php
+   icon: https://img.icons8.com/color/48/000000/telegram-app--v1.png
+   target: _self
+   ```
 
-**Note:** This issue was fixed in the latest version. The AppConfig file now uses the correct cPanel/WHM plugin registration format.
+4. **Check registration status**:
+   ```bash
+   /usr/local/cpanel/bin/rebuild_sprites
+   ```
+
+5. **Refresh your WHM interface** (clear browser cache or use Ctrl+F5)
+
+**Note:** This issue has been fixed in the latest version. The AppConfig file now uses the simplified cPanel/WHM plugin registration format with only required fields, which ensures better compatibility across different cPanel/WHM versions.
 
 ## Security Notes
 
