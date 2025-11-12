@@ -242,9 +242,9 @@ If you've installed the plugin but it doesn't appear in **WHM → Plugins**:
    name: Unique Notify
    version: 1.0.0
    description: CloudLinux CPU Monitoring with Telegram Alerts
-   url: /cgi/uniquenotify/index.php
+   url: /cgi/uniquenotify/
+   feature: Unique Notify
    icon: https://img.icons8.com/color/48/000000/telegram-app--v1.png
-   target: _self
    ```
 
 4. **Check registration status**:
